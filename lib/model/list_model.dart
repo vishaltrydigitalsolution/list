@@ -12,3 +12,5 @@ class List {
     bool isSelected = false,
   }) : isSelected = isSelected.obs;
 }
+
+

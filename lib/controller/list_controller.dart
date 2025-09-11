@@ -7,3 +7,6 @@ class ListController extends GetxController{
   final TextEditingController detailController = TextEditingController();
   late List? list ;
 }
+
+
+
