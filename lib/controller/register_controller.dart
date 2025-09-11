@@ -38,3 +38,5 @@ class RegisterController extends GetxController {
   }
 
   }
+
+
