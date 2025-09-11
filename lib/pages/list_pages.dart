@@ -3,63 +3,55 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:list/controller/register_controller.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+
 class ListPages extends StatelessWidget {
   ListPages({super.key});
   final RegisterController controller = Get.put(RegisterController());
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          textAlign: TextAlign.center,
-          'List Pages',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 32,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: Colors.grey[400],
-        actions: [
-          IconButton(
-            onPressed: () {
-              if (controller.Lists.isEmpty)
-              {
-              } else {
-                controller.selectAll.value = !controller.selectAll.value;
-                for (var list in controller.Lists) {
-                  list.isSelected.value = controller.selectAll.value;
-                }
-                controller.Lists.refresh();
-              }
-            },
-            icon: const Icon(Icons.select_all, size: 25, color: Colors.black),
-          ),
-          IconButton(
-            onPressed: () {
-              controller.clearAll();
-            },
-            icon: Icon(Icons.clear_all, size: 25, color: Colors.black),
-          ),
-        ],
-        leading: IconButton(
-          onPressed: () {
-            controller.deleteSelected();
-          },
-          icon: Icon(Icons.delete, size: 24, color: Colors.black),
-        ),
-        centerTitle: true,
-      ),
-      body: Obx(() {
-        if (controller.Lists.isEmpty) {
-          return const Center(
-            child: Text(
-              "No data available",
-              style: TextStyle(fontSize: 32, color: Colors.black),
+    return Obx(
+      () => Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            textAlign: TextAlign.center,
+            'List Pages',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 32,
+              fontWeight: FontWeight.bold,
             ),
-          );
-        }
-        return ListView.builder(
+          ),
+          backgroundColor: Colors.grey[400],
+          actions: [
+            IconButton(
+              onPressed: () {
+                controller.selectAll.value = !controller.selectAll.value;
+              },
+              icon: Icon(Icons.select_all, size: 25, color: Colors.black),
+            ),
+            IconButton(
+              onPressed: () {
+                controller.clearAll();
+              },
+              icon: Icon(Icons.clear_all, size: 25, color: Colors.black),
+            ),
+          ],
+          leading: Visibility(
+            visible:
+                controller.selectAll.value ||
+                controller.Lists.any((list) => list.isSelected.value),
+
+            child: IconButton(
+              onPressed: () {
+                controller.deleteSelected();
+              },
+              icon: Icon(Icons.delete, size: 25, color: Colors.black),
+            ),
+          ),
+
+          centerTitle: true,
+        ),
+        body: ListView.builder(
           itemCount: controller.Lists.length,
           itemBuilder: (context, screen) {
             final list = controller.Lists[screen];
@@ -109,34 +101,45 @@ class ListPages extends StatelessWidget {
                         ),
                   title: Text(
                     list.name,
-                    style: const TextStyle(color: Colors.black, fontSize: 22),
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w300,
+                    ),
                   ),
                   subtitle: Text(
                     list.detail,
-                    style: const TextStyle(color: Colors.black54, fontSize: 17),
+                    style: const TextStyle(
+                      color: Colors.black54,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300,
+                    ),
                   ),
-                  trailing: Checkbox(
-                    value: list.isSelected.value,
-                    onChanged: (value) {
-                      controller.Select(screen);
-                    },
+                  trailing: Visibility(
+                    visible: controller.selectAll.value,
+                    child: Checkbox(
+                      checkColor: Colors.grey,
+                      activeColor: Colors.black,
+                      value: list.isSelected.value,
+                      onChanged: (value) {
+                        controller.select(screen);
+                      },
+                    ),
                   ),
                 ),
               ),
             );
           },
-        );
-      }),
-      backgroundColor: Colors.grey[400],
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.toNamed('/register');
-        },
-        backgroundColor: Colors.black,
-        child: const Icon(Icons.add, color: Colors.white, size: 32),
+        ),
+        backgroundColor: Colors.grey[400],
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Get.toNamed('/register');
+          },
+          backgroundColor: Colors.black,
+          child: const Icon(Icons.add, color: Colors.white, size: 32),
+        ),
       ),
     );
   }
 }
-
-

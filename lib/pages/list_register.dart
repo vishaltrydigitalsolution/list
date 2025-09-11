@@ -21,7 +21,7 @@ class ListRegister extends StatelessWidget {
   Widget build(BuildContext context) {
     if (Get.arguments != null) {
       final data = Get.arguments;
-      controller.list = data["list"];
+      controller.list = data["ALL"];
       controller.nameController.text = controller.list!.name;
       controller.detailController.text = controller.list!.detail;
     }
