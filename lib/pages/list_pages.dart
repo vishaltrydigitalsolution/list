@@ -26,6 +26,7 @@ class ListPages extends StatelessWidget {
             IconButton(
               onPressed: () {
                 controller.selectAll.value = !controller.selectAll.value;
+                controller.userList.refresh();
               },
               icon: Icon(Icons.select_all, size: 25, color: Colors.black),
             ),
@@ -38,12 +39,11 @@ class ListPages extends StatelessWidget {
           ],
           leading: Visibility(
             visible:
-                controller.selectAll.value ||
-                controller.Lists.any((list) => list.isSelected.value),
-
+                    controller.userList.any((list)=>list.isSelected.value),
             child: IconButton(
               onPressed: () {
                 controller.deleteSelected();
+                controller.userList.refresh();
               },
               icon: Icon(Icons.delete, size: 25, color: Colors.black),
             ),
@@ -52,9 +52,9 @@ class ListPages extends StatelessWidget {
           centerTitle: true,
         ),
         body: ListView.builder(
-          itemCount: controller.Lists.length,
+          itemCount: controller.userList.length,
           itemBuilder: (context, screen) {
-            final list = controller.Lists[screen];
+            final list = controller.userList[screen];
             return Slidable(
               key: ValueKey(screen),
               endActionPane: ActionPane(
@@ -62,7 +62,7 @@ class ListPages extends StatelessWidget {
                 children: [
                   SlidableAction(
                     onPressed: (context) {
-                      controller.Lists.removeAt(screen);
+                      controller.userList.removeAt(screen);
                     },
                     backgroundColor: Colors.grey[400]!,
                     foregroundColor: Colors.black,
@@ -143,3 +143,5 @@ class ListPages extends StatelessWidget {
     );
   }
 }
+
+
