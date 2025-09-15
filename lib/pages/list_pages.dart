@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:list/controller/register_controller.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-
 class ListPages extends StatelessWidget {
   ListPages({super.key});
   final RegisterController controller = Get.put(RegisterController());
@@ -36,6 +35,7 @@ class ListPages extends StatelessWidget {
               },
               icon: Icon(Icons.clear_all, size: 25, color: Colors.black),
             ),
+            IconButton(onPressed: (){Get.toNamed("/home");}, icon: Icon(Icons.add))
           ],
           leading: Visibility(
             visible:
@@ -132,12 +132,16 @@ class ListPages extends StatelessWidget {
           },
         ),
         backgroundColor: Colors.grey[400],
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Get.toNamed('/register');
-          },
-          backgroundColor: Colors.black,
-          child: const Icon(Icons.add, color: Colors.white, size: 32),
+        floatingActionButton: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FloatingActionButton(
+              onPressed: () {
+                Get.toNamed('/register');
+              },
+              backgroundColor: Colors.black,
+              child: const Icon(Icons.add, color: Colors.white, size: 32),
+            ),],
         ),
       ),
     );
