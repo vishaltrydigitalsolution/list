@@ -32,11 +32,6 @@ class ProductController extends GetxController{
       final response = await dio.get("https://dummyjson.com/products?$ID=12");
       if(response.statusCode == 200) {
         return Products.fromJson(response.data);
-        //  final Map<String,dynamic> data = response.data;
-        //  final List<dynamic> productsData = data["products"];
-        //  product.value = productsData.map((item)=>Products.fromJson(item)).toList();
-        //
-        // print(product);
       }else{
         print("Error: ${response.statusCode}");
       }
