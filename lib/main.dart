@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:list/pages/home_page.dart';
 import 'package:list/pages/list_pages.dart';
 import 'package:list/pages/list_register.dart';
 import 'package:list/routes/list_routes.dart';
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       routes: {
         AppRoutes.list: (context) => ListPages(),
         AppRoutes.register: (context) => ListRegister(),
+        AppRoutes.home: (context)=>HomePage(),
       },
     );
   }

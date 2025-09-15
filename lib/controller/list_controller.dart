@@ -9,4 +9,3 @@ class ListController extends GetxController{
 }
 
 
-
